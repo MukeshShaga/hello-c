@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "options": { "cwd": "${workspaceFolder}/spi-app" },
+    "tasks": [
+        {
+            "label": "spi-app: build (mock, debug)",
+            "type": "shell",
+            "command": "make BACKEND=mock DEBUG=1",
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": { "base": "$gcc", "fileLocation": ["relative", "${workspaceFolder}/spi-app"] }
+        },
+        {
+            "label": "spi-app: build tests (mock)",
+            "type": "shell",
+            "command": "make BACKEND=mock build/mock/test_runner",
+            "problemMatcher": { "base": "$gcc", "fileLocation": ["relative", "${workspaceFolder}/spi-app"] }
+        },
+        {
+            "label": "spi-app: run tests",
+            "type": "shell",
+            "command": "make test",
+            "group": "test",
+            "problemMatcher": { "base": "$gcc", "fileLocation": ["relative", "${workspaceFolder}/spi-app"] }
+        },
+        {
+            "label": "spi-app: cross-build for target (aarch64, spidev)",
+            "type": "shell",
+            "command": "make CROSS_COMPILE=aarch64-linux-gnu- DEBUG=1",
+            "problemMatcher": { "base": "$gcc", "fileLocation": ["relative", "${workspaceFolder}/spi-app"] }
+        },
+        {
+            "label": "spi-app: clean",
+            "type": "shell",
+            "command": "make clean",
+            "problemMatcher": []
+        }
+    ]
+}

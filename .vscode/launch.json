@@ -1,0 +1,53 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "spi-app: debug locally (mock SPI)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/spi-app/build/mock/spi-app",
+            "args": ["-v", "-n", "3"],
+            "cwd": "${workspaceFolder}/spi-app",
+            "stopAtEntry": true,
+            "externalConsole": false,
+            "preLaunchTask": "spi-app: build (mock, debug)",
+            "osx":   { "MIMode": "lldb" },
+            "linux": { "MIMode": "gdb", "miDebuggerPath": "gdb" }
+        },
+        {
+            "name": "spi-app: debug unit tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/spi-app/build/mock/test_runner",
+            "cwd": "${workspaceFolder}/spi-app",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "preLaunchTask": "spi-app: build tests (mock)",
+            "osx":   { "MIMode": "lldb" },
+            "linux": { "MIMode": "gdb", "miDebuggerPath": "gdb" }
+        },
+        {
+            // On the board:  gdbserver :2345 ./spi-app
+            "name": "spi-app: remote debug on target (gdbserver)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/spi-app/build/linux/spi-app",
+            "cwd": "${workspaceFolder}/spi-app",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb-multiarch",
+            "miDebuggerServerAddress": "${input:targetAddress}:2345",
+            "stopAtEntry": true,
+            "setupCommands": [
+                { "text": "-enable-pretty-printing", "ignoreFailures": true }
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "targetAddress",
+            "type": "promptString",
+            "description": "IP address of the target board running gdbserver",
+            "default": "192.168.1.50"
+        }
+    ]
+}
